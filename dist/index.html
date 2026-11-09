@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#071d1c">
+  <meta name="description" content="Moonlit Garden — свадебное приглашение">
+  <meta name="invitation-default-id" content="3">
+  <title>Moonlit Garden — свадебное приглашение</title>
+  <link rel="preload" href="assets/moonlit-garden-poster.jpg" as="image" type="image/jpeg" fetchpriority="high">
+  <link rel="preload" href="assets/fonts/cormorant-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <div class="fixed-scene" aria-hidden="true">
+    <img class="fixed-scene__poster" src="assets/moonlit-garden-poster.jpg" alt="" width="941" height="1672" decoding="async" fetchpriority="high">
+    <video class="fixed-scene__video" id="backgroundVideo" autoplay muted loop playsinline preload="metadata" poster="assets/moonlit-garden-poster.jpg">
+      <source src="assets/moonlit-garden-loop.mp4" type="video/mp4">
+    </video>
+    <div class="fixed-scene__wash"></div>
+  </div>
+
+  <section class="status-screen" id="statusScreen" aria-live="polite">
+    <div class="status-card">
+      <span class="status-card__ornament">✦</span>
+      <div class="status-loader" id="statusLoader" aria-hidden="true"></div>
+      <h1 id="statusTitle">Загружаем приглашение…</h1>
+      <button class="button button--ghost" id="retryButton" type="button" hidden>Попробовать снова</button>
+    </div>
+  </section>
+
+  <main class="invitation-page" id="site" hidden>
+    <div class="glass-panel">
+      <header class="hero section reveal">
+        <img class="decor decor--rose" src="assets/decorations/decor-01-rose-cluster.png?v=20261109-3" alt="" width="900" height="600" decoding="async" fetchpriority="low" draggable="false">
+        <img class="decor decor--hanging-lantern" src="assets/decorations/decor-02-hanging-lantern.png?v=20261109-3" alt="" width="600" height="900" decoding="async" fetchpriority="low" draggable="false">
+        <p class="eyebrow" data-ui="invitationLabel">Свадебное приглашение</p>
+        <div class="hero__flourish" aria-hidden="true"><i></i><span>❦</span><i></i></div>
+        <h1 class="hero__names">
+          <span id="groomName"></span>
+          <b>&amp;</b>
+          <span id="brideName"></span>
+        </h1>
+        <p class="hero__date" id="heroDate"></p>
+        <a class="scroll-cue" href="#invitationSection">
+          <span data-ui="scroll">листайте вниз</span>
+          <i aria-hidden="true"></i>
+        </a>
+      </header>
+
+      <section class="section letter reveal" id="invitationSection">
+        <p class="eyebrow" data-ui="dearLabel">Для самых близких</p>
+        <h2 class="display-title" id="invitationTitle"></h2>
+        <p class="body-copy body-copy--lead" id="invitationText"></p>
+        <div class="signature">
+          <span id="invitationSignature">С любовью</span>
+          <b id="signatureNames"></b>
+        </div>
+      </section>
+
+      <section class="section wish reveal" id="wishBlock" hidden>
+        <div class="ornament" aria-hidden="true">✦</div>
+        <p class="eyebrow" data-ui="wishLabel">От всего сердца</p>
+        <h2 class="display-title" id="wishTitle"></h2>
+        <p class="body-copy" id="wishText"></p>
+      </section>
+
+      <section class="section date-section reveal" id="dateSection">
+        <p class="eyebrow" data-ui="dateLabel">Сохраните эту дату</p>
+        <div class="date-lockup">
+          <span class="date-lockup__day" id="dateDay"></span>
+          <div>
+            <strong id="dateMonth"></strong>
+            <span id="dateMeta"></span>
+          </div>
+        </div>
+        <div class="calendar" aria-label="Календарь">
+          <div class="calendar__heading">
+            <span id="calendarMonth"></span>
+            <b id="calendarYear"></b>
+          </div>
+          <div class="calendar__week" id="calendarWeek"></div>
+          <div class="calendar__days" id="calendarDays"></div>
+        </div>
+      </section>
+
+      <section class="section program" id="programSection" hidden>
+        <div class="section-heading reveal">
+          <p class="eyebrow" data-ui="programLabel">В этот особенный день</p>
+          <h2 class="display-title" data-ui="programTitle">Программа дня</h2>
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </section>
+
+      <section class="section venue reveal" id="venueSection" hidden>
+        <p class="eyebrow" data-ui="venueLabel">Место торжества</p>
+        <span class="venue__type" id="venueType"></span>
+        <h2 class="venue__name" id="venueName"></h2>
+        <p class="venue__address" id="venueAddress"></p>
+        <div class="venue__actions" id="venueActions" hidden>
+          <a class="button" id="googleMap" target="_blank" rel="noopener noreferrer">Google Maps</a>
+          <a class="button button--ghost" id="twoGisMap" target="_blank" rel="noopener noreferrer">2ГИС</a>
+        </div>
+      </section>
+
+      <section class="section rsvp" id="rsvpSection" hidden>
+        <img class="decor decor--water-lilies" src="assets/decorations/decor-10-water-lilies.png?v=20261109-3" alt="" width="900" height="450" loading="lazy" decoding="async" draggable="false">
+        <div class="section-heading reveal">
+          <p class="eyebrow" data-ui="answerLabel">Ваш ответ</p>
+          <h2 class="display-title" data-ui="rsvpTitle">Будете ли вы с нами?</h2>
+          <p class="body-copy rsvp__lead" data-ui="rsvpLead">Пожалуйста, подтвердите участие — нам важно подготовить всё с заботой.</p>
+        </div>
+        <form class="rsvp-form reveal" id="rsvpForm" novalidate>
+          <label class="field">
+            <span data-ui="nameLabel">Ваше имя</span>
+            <input id="guestName" name="name" type="text" autocomplete="name" maxlength="120" required>
+          </label>
+          <fieldset class="field fieldset">
+            <legend data-ui="attendanceLabel">Вы сможете прийти?</legend>
+            <label class="choice"><input type="radio" name="attendance" value="yes" checked><span data-ui="attendanceYes">Да, с радостью</span></label>
+            <label class="choice"><input type="radio" name="attendance" value="no"><span data-ui="attendanceNo">К сожалению, не смогу</span></label>
+          </fieldset>
+          <label class="field" id="guestCountField">
+            <span data-ui="guestCount">Количество гостей</span>
+            <select id="guestCount" name="guests_count"></select>
+          </label>
+          <label class="field" id="guestWishField">
+            <span data-ui="guestWish">Ваше пожелание</span>
+            <textarea id="guestWish" name="wish" maxlength="600" rows="4"></textarea>
+          </label>
+          <button class="button button--submit" id="rsvpSubmit" type="submit" data-ui="submit">Подтвердить участие</button>
+          <p class="form-status" id="formStatus" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <footer class="footer section reveal">
+        <img class="decor decor--garland" src="assets/decorations/decor-09-pearl-ivy-garland.png?v=20261109-3" alt="" width="2172" height="724" loading="lazy" decoding="async" draggable="false">
+        <div class="footer__countdown" id="footerCountdown">
+          <h2 class="footer__countdown-title" data-ui="countdownTitle">До нашей свадьбы осталось</h2>
+          <div class="countdown-ornament" aria-hidden="true"><i></i><span>♡</span><i></i></div>
+          <div class="countdown" aria-live="off">
+            <div><strong id="countdownDays">0</strong><span data-ui="countdownDays">дней</span></div>
+            <div><strong id="countdownHours">00</strong><span data-ui="countdownHours">часов</span></div>
+            <div><strong id="countdownMinutes">00</strong><span data-ui="countdownMinutes">минут</span></div>
+            <div><strong id="countdownSeconds">00</strong><span data-ui="countdownSeconds">секунд</span></div>
+          </div>
+        </div>
+        <div class="footer__love">
+          <div class="footer__mark" aria-hidden="true">❦</div>
+          <p data-ui="withLove">С любовью,</p>
+          <h2 id="footerNames"></h2>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <nav class="language-switch" id="languageSwitch" aria-label="Выбор языка" hidden></nav>
+</body>
+</html>
