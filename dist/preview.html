@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <base href="/">
+  <meta name="theme-color" content="#071d1c">
+  <meta name="description" content="Превью свадебного приглашения Бекзата и Алины">
+  <title>Бекзат &amp; Алина — превью приглашения</title>
+  <link rel="preload" href="assets/moonlit-garden-poster.jpg" as="image" type="image/jpeg" fetchpriority="high">
+  <link rel="preload" href="assets/fonts/cormorant-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    html,body{width:100%;height:100%;overflow:hidden}
+    body.preview-page{min-height:100svh}
+    .preview-page .invitation-page{display:grid!important;grid-template-rows:minmax(0,1fr);height:100svh;min-height:100svh;padding:clamp(18px,5svh,54px) 0;overflow:hidden}
+    .preview-page .glass-panel{height:100%;max-height:900px}
+    .preview-page .hero{height:100%;min-height:0;padding-top:clamp(62px,12svh,140px);padding-bottom:clamp(50px,9svh,100px)}
+    .preview-page .scroll-cue{pointer-events:none}
+    .preview-page .decor{will-change:auto}
+    @media (max-width:620px){.preview-page .invitation-page{padding:clamp(16px,4svh,34px) 0}.preview-page .hero{padding-top:clamp(58px,11svh,96px);padding-bottom:clamp(42px,8svh,74px)}}
+  </style>
+</head>
+<body class="preview-page">
+  <div class="fixed-scene" aria-hidden="true">
+    <img class="fixed-scene__poster" src="assets/moonlit-garden-poster.jpg" alt="" width="941" height="1672" decoding="async" fetchpriority="high">
+    <div class="fixed-scene__wash"></div>
+  </div>
+
+  <main class="invitation-page">
+    <div class="glass-panel">
+      <header class="hero section reveal is-visible">
+        <img class="decor decor--rose" src="assets/decorations/decor-01-rose-cluster.png?v=20261109-3" alt="" width="900" height="600" decoding="async" fetchpriority="low" draggable="false">
+        <img class="decor decor--hanging-lantern" src="assets/decorations/decor-02-hanging-lantern.png?v=20261109-3" alt="" width="600" height="900" decoding="async" fetchpriority="low" draggable="false">
+        <p class="eyebrow">Свадебное приглашение</p>
+        <div class="hero__flourish" aria-hidden="true"><i></i><span>❦</span><i></i></div>
+        <h1 class="hero__names">
+          <span>Бекзат</span>
+          <b>&amp;</b>
+          <span>Алина</span>
+        </h1>
+        <p class="hero__date">12 июня 2027</p>
+        <div class="scroll-cue" aria-hidden="true">
+          <span>листайте вниз</span>
+          <i></i>
+        </div>
+      </header>
+    </div>
+  </main>
+</body>
+</html>
