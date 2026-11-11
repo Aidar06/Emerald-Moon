@@ -16,7 +16,7 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .glass-panel{position:relative;width:min(calc(100% - 96px),620px);margin:0 auto;overflow:visible;border:1px solid rgba(255,255,255,.38);border-radius:4px;background:linear-gradient(180deg,rgba(255,252,246,.27),rgba(255,248,238,.16));box-shadow:0 22px 70px rgba(76,54,27,.07);backdrop-filter:blur(3px) saturate(1.01);-webkit-backdrop-filter:blur(3px) saturate(1.01);transform-style:preserve-3d}
 .glass-panel::before{content:"";position:absolute;inset:9px;z-index:5;border:1px solid rgba(255,255,255,.2);border-radius:1px;pointer-events:none}
 .section{position:relative;padding:clamp(86px,13vw,132px) clamp(28px,7vw,58px);text-align:center}
-.decor{position:absolute;z-index:7;display:block;height:auto;max-width:none;pointer-events:none;user-select:none;transform-style:preserve-3d;will-change:transform;filter:drop-shadow(0 16px 13px rgba(79,54,25,.18));animation:decorFloat 7s ease-in-out infinite alternate}
+.decor{position:absolute;z-index:7;display:block;height:auto;max-width:none;pointer-events:none;user-select:none;transform-style:preserve-3d;backface-visibility:hidden;will-change:translate;filter:drop-shadow(0 16px 13px rgba(79,54,25,.18));animation:decorFloat 10s cubic-bezier(.45,0,.55,1) infinite alternate}
 .decor--rose{top:-56px;left:-116px;width:clamp(185px,39vw,290px);transform:rotate(-12deg) translateZ(28px);animation-delay:-1.8s}
 .decor--ribbon{top:38%;right:-94px;width:clamp(130px,25vw,190px);transform:rotate(9deg) translateZ(18px);opacity:.94;animation-delay:-4.2s}
 .decor--pearls{right:-137px;bottom:-87px;width:clamp(220px,46vw,320px);transform:rotate(-15deg) translateZ(32px);animation-delay:-3s}
@@ -127,7 +127,7 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .reveal.is-visible{opacity:1;transform:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes scrollLine{0%,100%{transform:scaleY(.55);transform-origin:top;opacity:.45}50%{transform:scaleY(1);opacity:1}}
-@keyframes decorFloat{0%{margin-top:-3px}100%{margin-top:6px}}
+@keyframes decorFloat{0%{translate:0 -3px}100%{translate:0 6px}}
 @media (max-width:620px){
   body{font-size:19px}
   .invitation-page{padding:42px 0 max(104px,calc(88px + env(safe-area-inset-bottom)))}
@@ -245,7 +245,7 @@ body{color:var(--ink);text-shadow:0 1px 15px rgba(0,9,8,.32)}
 .status-card{border-color:rgba(233,200,137,.38);background:rgba(4,29,27,.7);color:#fff5e4;backdrop-filter:blur(12px)}
 .status-card__ornament{color:#dfb66d}.status-loader{border-color:rgba(238,211,159,.24);border-top-color:#edca88}
 
-.decor{z-index:7;filter:drop-shadow(0 19px 16px rgba(0,8,7,.42)) drop-shadow(0 0 12px rgba(224,177,92,.11));animation:decorFloat 7.5s ease-in-out infinite alternate;transform-origin:center;mix-blend-mode:normal}
+.decor{z-index:7;filter:drop-shadow(0 19px 16px rgba(0,8,7,.42)) drop-shadow(0 0 12px rgba(224,177,92,.11));animation:decorFloat 10s cubic-bezier(.45,0,.55,1) infinite alternate;transform-origin:center;mix-blend-mode:normal}
 .decor--rose{top:-75px;left:-145px;width:clamp(220px,43vw,325px);transform:rotate(-11deg) translateZ(48px);animation-delay:-1.8s;-webkit-mask-image:radial-gradient(ellipse 64% 58% at 50% 48%,#000 38%,rgba(0,0,0,.82) 52%,transparent 72%);mask-image:radial-gradient(ellipse 64% 58% at 50% 48%,#000 38%,rgba(0,0,0,.82) 52%,transparent 72%)}
 .decor--hanging-lantern{top:92px;right:-74px;width:clamp(105px,19vw,145px);transform:rotate(3deg) translateZ(64px);animation-delay:-4.1s;filter:drop-shadow(0 0 16px rgba(245,185,75,.22));-webkit-mask-image:radial-gradient(ellipse 70% 62% at 50% 50%,#000 46%,rgba(0,0,0,.82) 65%,transparent 88%);mask-image:radial-gradient(ellipse 70% 62% at 50% 50%,#000 46%,rgba(0,0,0,.82) 65%,transparent 88%)}
 .decor--fireflies{top:35%;left:-94px;width:clamp(230px,46vw,340px);opacity:.72;transform:rotate(-8deg) translateZ(70px);animation:fireflyDrift 8s ease-in-out infinite alternate;filter:none;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(ellipse 72% 62% at 50% 50%,#000 35%,rgba(0,0,0,.76) 58%,transparent 88%);mask-image:radial-gradient(ellipse 72% 62% at 50% 50%,#000 35%,rgba(0,0,0,.76) 58%,transparent 88%)}
@@ -256,7 +256,7 @@ body{color:var(--ink);text-shadow:0 1px 15px rgba(0,9,8,.32)}
 .decor--pavilion{right:-165px;top:-80px;width:clamp(270px,54vw,390px);transform:rotate(2deg) translateZ(28px);animation-delay:-3.8s}
 .decor--drape{left:-135px;bottom:-50px;width:clamp(280px,58vw,410px);opacity:.9;transform:rotate(-7deg) translateZ(34px);animation-delay:-4.6s}
 .decor--water-lilies{right:-153px;bottom:-55px;width:clamp(280px,58vw,410px);transform:rotate(4deg) translateZ(48px);animation-delay:-6.1s}
-.decor--garland{left:50%;top:-58px;width:clamp(390px,80vw,560px);transform:translateX(-50%) rotate(-2deg) translateZ(42px);animation:garlandFloat 7s ease-in-out infinite alternate}
+.decor--garland{left:50%;top:-58px;width:clamp(390px,80vw,560px);transform:translateX(-50%) rotate(-2deg) translateZ(42px);animation:decorFloat 12s cubic-bezier(.45,0,.55,1) infinite alternate}
 @keyframes fireflyDrift{0%{margin-top:-4px;opacity:.55}50%{opacity:.82}100%{margin-top:8px;opacity:.65}}
 @keyframes garlandFloat{0%{transform:translateX(-50%) rotate(-2deg) translateY(-3px) translateZ(42px)}100%{transform:translateX(-50%) rotate(1deg) translateY(5px) translateZ(42px)}}
 
