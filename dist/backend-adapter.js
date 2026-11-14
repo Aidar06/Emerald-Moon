@@ -21,10 +21,9 @@ export function sanitizeText(value, maxLength = 1200) {
 
 export function resolveInvitationId(pathname, defaultId = DEFAULT_INVITATION_ID) {
   const first = String(pathname || '').split('/').filter(Boolean)[0];
-  if (!first) return defaultId;
-  if (!/^\d+$/.test(first)) return null;
-  const id = Number(first);
-  return Number.isSafeInteger(id) && id > 0 ? id : null;
+  if (!first) return String(defaultId);
+  const publicId = decodeURIComponent(first).trim();
+  return /^[A-Za-z0-9_-]{1,128}$/.test(publicId) ? publicId : null;
 }
 
 export function withBishkekOffset(value) {
@@ -99,7 +98,7 @@ export function normalizeInvitation(raw = {}, fallbackId = DEFAULT_INVITATION_ID
 
   const maxGuests = Math.max(1, Math.min(100, Math.trunc(Number(raw.rsvp?.max_guests) || 1)));
   return {
-    id: Number(raw.id ?? raw.priglosi_id) || fallbackId,
+    id: String(raw.public_id ?? fallbackId),
     names: {
       groom: sanitizeText(rawNames.groom ?? rawNames.has, 120),
       bride: sanitizeText(rawNames.bride ?? rawNames.wife, 120)
@@ -168,8 +167,14 @@ export function buildPatchPayload(raw, guest, fallbackId = DEFAULT_INVITATION_ID
   const guests = Array.isArray(raw?.guests) ? raw.guests : [];
   const maxGuests = raw?.rsvp?.max_guests ?? 1;
   return {
-    ...raw,
-    id: Number(raw?.id ?? raw?.priglosi_id) || fallbackId,
+    languages: raw?.languages,
+    names: raw?.names,
+    date: raw?.date,
+    invitation: raw?.invitation,
+    wish_block: raw?.wish_block,
+    ceremonies: raw?.ceremonies,
+    venue: raw?.venue,
+    rsvp: raw?.rsvp,
     guests: [...guests, createGuestPayload(guest, maxGuests)]
   };
 }
@@ -186,7 +191,7 @@ async function parseResponse(response) {
 }
 
 export async function fetchInvitationRaw(id, { fetchImpl = fetch, signal } = {}) {
-  const response = await fetchImpl(`${API_BASE_URL}/${Number(id)}`, {
+  const response = await fetchImpl(`${API_BASE_URL}/${encodeURIComponent(String(id))}`, {
     method: 'GET',
     headers: { Accept: 'application/json' },
     cache: 'no-store',
@@ -198,7 +203,7 @@ export async function fetchInvitationRaw(id, { fetchImpl = fetch, signal } = {})
 export async function appendGuestToInvitation(id, guest, { fetchImpl = fetch } = {}) {
   const latest = await fetchInvitationRaw(id, { fetchImpl });
   const payload = buildPatchPayload(latest, guest, id);
-  const response = await fetchImpl(`${API_BASE_URL}/${Number(id)}/full`, {
+  const response = await fetchImpl(`${API_BASE_URL}/${encodeURIComponent(String(id))}/full`, {
     method: 'PATCH',
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
