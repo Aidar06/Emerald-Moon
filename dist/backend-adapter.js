@@ -201,13 +201,19 @@ export async function fetchInvitationRaw(id, { fetchImpl = fetch, signal } = {})
 }
 
 export async function appendGuestToInvitation(id, guest, { fetchImpl = fetch } = {}) {
-  const latest = await fetchInvitationRaw(id, { fetchImpl });
-  const payload = buildPatchPayload(latest, guest, id);
-  const response = await fetchImpl(`${API_BASE_URL}/${encodeURIComponent(String(id))}/full`, {
-    method: 'PATCH',
+  const attendance = guest?.isAttending === true || guest?.is_attending === true;
+  const payload = {
+    name: sanitizeText(guest?.name, 120),
+    count: Math.max(1, Math.trunc(Number(guest?.guestsCount ?? guest?.guests_count) || 1)),
+    attendance,
+    wish: sanitizeText(guest?.wish, 600)
+  };
+  const response = await fetchImpl(`${API_BASE_URL}/${encodeURIComponent(String(id))}/rsvp`, {
+    method: 'POST',
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   });
   await parseResponse(response);
-  return { raw: payload, invitation: normalizeInvitation(payload, id) };
+  const latest = await fetchInvitationRaw(id, { fetchImpl });
+  return { raw: latest, invitation: normalizeInvitation(latest, id) };
 }
